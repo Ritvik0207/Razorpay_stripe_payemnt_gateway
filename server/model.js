@@ -4,9 +4,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const sequelize = new Sequelize(
-   'payment' ,
+   'payment1' ,
     'postgres',
-    '12345', {
+    '123456', {
     host: 'localhost',
     dialect: 'postgres',
     port: 5432,
