@@ -11,11 +11,11 @@ const { Pool } = require('pg');
 
 // Create a PostgreSQL pool
 const pool = new Pool({
-	user: process.env.PG_USER,
-	host: process.env.PG_HOST,
-	database: process.env.PG_DB,
-	password: process.env.PG_PASS,
-	port: process.env.PG_PORT,
+	user: 'postgres',
+	host: 'localhost',
+	database: 'payment',
+	password: '12345',
+	port: '5432',
 });
 
 //this is the endpoint for razorpay payment
