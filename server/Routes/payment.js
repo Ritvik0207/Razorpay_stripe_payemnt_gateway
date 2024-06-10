@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config()
+require('dotenv').config();
 const router = require("express").Router();
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
@@ -22,8 +23,8 @@ const pool = new Pool({
 router.post("/orders", async (req, res) => {
 	try {
 		const instance = new Razorpay({
-			key_id: process.env.KEY_ID,
-			key_secret: process.env.KEY_SECRET,
+			key_id:'rzp_test_6m5XXn4Vfye85p',
+			key_secret:'FyJKt3T1DVMsIZTxKWZfgr7Z',
 		});
 
 		const options = {
