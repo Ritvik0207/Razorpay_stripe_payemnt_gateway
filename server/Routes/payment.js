@@ -17,18 +17,19 @@ const pool = new Pool({
 	database: 'payment',
 	password: '12345',
 	port: '5432',
+
 });
 
 //this is the endpoint for razorpay payment
 router.post("/orders", async (req, res) => {
 	try {
 		const instance = new Razorpay({
-			key_id:'rzp_test_6m5XXn4Vfye85p',
-			key_secret:'FyJKt3T1DVMsIZTxKWZfgr7Z',
+			key_id:'rzp_test_DL8XNF5TE9MW4P',
+			key_secret:'kcWRB5oZ98HrE3eKR7Thc2ef',
 		});
 
 		const options = {
-			amount: req.body.amount * 100,
+			amount: req.body.amount * 1,
 			currency: "INR",
 			receipt: crypto.randomBytes(10).toString("hex"),
 			notes: { userId: req.body.userId }  //you also get other fields from frontend and store in the notes which can be retrieved through webhook after completion
@@ -54,15 +55,15 @@ router.post("/verify", async (req, res) => {
 			req.body;
 		const sign = razorpay_order_id + "|" + razorpay_payment_id;
 		const expectedSign = crypto
-			.createHmac("sha256", "FyJKt3T1DVMsIZTxKWZfgr7Z")
+			.createHmac("sha256","kcWRB5oZ98HrE3eKR7Thc2ef")
 			.update(sign.toString())
 			.digest("hex");
 
 		if (razorpay_signature === expectedSign) {
 			// Fetch the order details from Razorpay to get the notes
 			const instance = new Razorpay({
-				key_id:'rzp_test_6m5XXn4Vfye85p',
-				key_secret: 'FyJKt3T1DVMsIZTxKWZfgr7Z',
+				key_id:'rzp_test_DL8XNF5TE9MW4P',
+				key_secret: 'kcWRB5oZ98HrE3eKR7Thc2ef',
 			});
 
 			const order = await instance.orders.fetch(razorpay_order_id);
@@ -92,7 +93,7 @@ router.post("/create-checkout-session", async (req, res) => {
 						product_data: {
 							name: name,
 						},
-						unit_amount: amount * 100,
+						unit_amount: amount * 1,
 					},
 					quantity: 1,
 				},
