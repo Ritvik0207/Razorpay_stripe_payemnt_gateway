@@ -54,15 +54,15 @@ router.post("/verify", async (req, res) => {
 			req.body;
 		const sign = razorpay_order_id + "|" + razorpay_payment_id;
 		const expectedSign = crypto
-			.createHmac("sha256", process.env.KEY_SECRET)
+			.createHmac("sha256", "FyJKt3T1DVMsIZTxKWZfgr7Z")
 			.update(sign.toString())
 			.digest("hex");
 
 		if (razorpay_signature === expectedSign) {
 			// Fetch the order details from Razorpay to get the notes
 			const instance = new Razorpay({
-				key_id: process.env.KEY_ID,
-				key_secret: process.env.KEY_SECRET,
+				key_id:'rzp_test_6m5XXn4Vfye85p',
+				key_secret: 'FyJKt3T1DVMsIZTxKWZfgr7Z',
 			});
 
 			const order = await instance.orders.fetch(razorpay_order_id);
@@ -98,8 +98,8 @@ router.post("/create-checkout-session", async (req, res) => {
 				},
 			],
 			mode: "payment",
-			success_url: "http://44.211.47.208:3000", //mention the your success url here
-			cancel_url: "http://44.211.47.208:3000",//mention the your url here;
+			success_url: "http://51.20.37.103:9000", //mention the your success url here
+			cancel_url: "http://51.20.37.103:9000",//mention the your url here;
 			metadata: {
 				userId: userId,
 			}
@@ -158,7 +158,7 @@ router.post("/webhook", express.json({ type: "application/json" }), async (req, 
 
 // Razorpay Webhook
 router.post("/razorpay/webhook", async (req, res) => {
-	const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+	const secret = "Ashish";
 	const shasum = crypto.createHmac('sha256', secret);
 	shasum.update(JSON.stringify(req.body));
 	const digest = shasum.digest('hex');
