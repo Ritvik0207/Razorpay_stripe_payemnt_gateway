@@ -104,8 +104,8 @@ router.post("/create-checkout-session", async (req, res) => {
 				},
 			],
 			mode: "payment",
-			success_url: "http://localhost:9000", //mention the your success url here
-			cancel_url: "http://localhost:9000",
+			success_url: "http://51.20.37.103:9000", //mention the your success url here
+			cancel_url: "http://51.20.37.103:9000",
 			metadata: {
 				userId: userId,
 			}
