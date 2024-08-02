@@ -67,14 +67,24 @@ router.post("/verify", async (req, res) => {
 			});
 
 			const order = await instance.orders.fetch(razorpay_order_id);
-			console.log("Fetched order:", order);
+			// console.log("Fetched order:", order);
 
-			if (!order) {
-				return res.status(400).json({ message: "Order not found!" });
-			}
+			// if (!order) {
+			// 	return res.status(400).json({ message: "Order not found!" });
+			// }
 
+			// const userId = order.notes.userId;
+			// console.log("Payment verified for user:", userId);
 			const userId = order.notes.userId;
-			console.log("Payment verified for user:", userId);
+
+            // Notify Django of the successful payment
+            await axios.post('http://your-django-url/api/payments/webhook/', {
+                userId: userId,
+                paymentId: razorpay_payment_id,
+                amount: order.amount / 100,
+                status: 'completed'
+            });
+			
 			return res.status(200).json({ message: "Payment verified successfully" });
 		} else {
 			return res.status(400).json({ message: "Invalid signature sent!" });
