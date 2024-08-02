@@ -78,13 +78,13 @@ router.post("/verify", async (req, res) => {
 			const userId = order.notes.userId;
 
             // Notify Django of the successful payment
-            await axios.post('http://your-django-url/api/payments/webhook/', {
+            await axios.post('http://16.171.14.53/api/payments/webhook/', {
                 userId: userId,
                 paymentId: razorpay_payment_id,
                 amount: order.amount / 100,
                 status: 'completed'
             });
-			
+
 			return res.status(200).json({ message: "Payment verified successfully" });
 		} else {
 			return res.status(400).json({ message: "Invalid signature sent!" });
